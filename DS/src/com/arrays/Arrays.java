@@ -7,7 +7,11 @@ public class Arrays {
 		for (int i =0;i<arr.length; i++) {
 			System.out.print(arr[i]+" ");
 		}
-		rotate(arr, 4);
+		
+		//rotateBruteForce(arr, 2);
+		rotateWithReversalAlgo(arr,2);
+		printArray(arr, 2);
+		
 	}
 	
 	//Brute Force Method
@@ -18,9 +22,9 @@ public class Arrays {
 	 * 3. Add temp elements to the end of array
 	 * 
 	 * O(n) - time complexity
-	 * O(n)
+	 * O(rotateTimes) - space complexity
 	 */
-	public static void rotate(int[] arr, int rotateTimes) {
+	public static void rotateBruteForce(int[] arr, int rotateTimes) {
 		int displacement = rotateTimes%(arr.length); //If rotattion is asked more than size of array, to adjust for this requirement we use MOD operator.
 		int[] temp = new int[displacement];
 		for(int i=0; i<displacement;i++) {
@@ -35,13 +39,41 @@ public class Arrays {
 			arr[(arr.length) - j] = temp[i];
 		}
 		
-		//print rotated array
-		System.out.print("\nRotated by "+rotateTimes+" : ");
-		for(int i=0;i<arr.length;i++) {
-			System.out.print(arr[i]+" ");
-		}
+		printArray(arr, rotateTimes);
+		
 	}
 	
 	//Reversal Alog.
+		/*
+		 * Alog :
+		 * 1. Divide array in 2 parts, division can be based on rotateTimes
+		 * 2. reverse 1st half array
+		 * 3.reverse 2nd half array
+		 * 4. Reverse whole array
+		 * 
+		 * O(n) - time complexity
+		 * O(1) - space complexity
+		 */
+	public static void rotateWithReversalAlgo(int[] arr, int rotateTimes) {
+		reverse(arr, 0, rotateTimes-1);
+		reverse(arr, rotateTimes, arr.length-1);
+		reverse(arr, 0, arr.length-1);
+	}
+	
+	public static void reverse(int[] arr,int start, int end) {
+		while(start<end) {
+			int temp = arr[start];
+			arr[start++] = arr[end];
+			arr[end--] = temp;
+		}
+	}
+	
+	public static void printArray(int [] arr, int rotateTimes) {
+		//print rotated array
+				System.out.print("\nRotated by "+rotateTimes+" : ");
+				for(int i=0;i<arr.length;i++) {
+					System.out.print(arr[i]+" ");
+				}
+	}
 	
 }
